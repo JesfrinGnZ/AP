@@ -18,9 +18,14 @@ public class AnalizadorSintactico {
     private static ArrayList<String> pila = new ArrayList<>();//Pila donde se isertara y eliminaran elementos
     private static boolean esLaPrimeraVezEntrandoAlMetodo = true;//Verifica que camino se debe tomar, si hay multiples caminos
     private static int posicionDeAnalisis;
+    private static String instruccionGuardada;
 
     public static void realizarAnalisis(ArrayList<Lexema> listaDeLexemas) {
-        String instruccionGuardada = "";
+        pila = new ArrayList<>();
+        pilasUsadas = new ArrayList<>();
+        posicionDeAnalisis = 0;
+        instruccionGuardada = "";
+        esLaPrimeraVezEntrandoAlMetodo=true;
         pila.add("Z");//Llenar la pila con el simbolo especial 
         pila.add("S");//Llenar la pila con el sibolo inicial de la gramatica
         for (posicionDeAnalisis = 0; posicionDeAnalisis < listaDeLexemas.size();) {
@@ -65,10 +70,12 @@ public class AnalizadorSintactico {
                 System.out.println("ESTRUCTURA ACEPTADA:" + instruccionGuardada);
                 instruccionGuardada = "";
                 if ((posicionDeAnalisis + 1) == listaDeLexemas.size()) {//Se ha terminado la cadena
-                    System.out.println("FIN DEL ANALISIS SINTACTICO");
                     pila = new ArrayList<>();
                     pilasUsadas = new ArrayList<>();
-                    break;
+                    pila.add("Z");//Llenar la pila con el simbolo especial 
+                    pila.add("S");//Llenar la pila con el sibolo inicial de la gramatica
+                    esLaPrimeraVezEntrandoAlMetodo = true;
+                    //break;
                 } else {//Se pasa al siguiente caracter
                     //posicionDeAnalisis++;
                     pila = new ArrayList<>();
@@ -89,7 +96,7 @@ public class AnalizadorSintactico {
                         pilasUsadas = new ArrayList<>();
                         break;
                     } else if ((posicionDeAnalisis + 1) == listaDeLexemas.size() && !buscarSimaDePila().equals("Z")) {//2)Ya no hay mas que leer y la sima de la pila no era z, no se acepta
-                        System.out.println("ERROR LA ESTRUCTURA NO ES VALIDA:"+instruccionGuardada);
+                        System.out.println("ERROR LA ESTRUCTURA NO ES VALIDA:" + instruccionGuardada);
                         pila = new ArrayList<>();
                         pilasUsadas = new ArrayList<>();
                         break;
@@ -103,84 +110,7 @@ public class AnalizadorSintactico {
                 }
             }
         }
-    }
-
-    public static void realizarAnalisisSintactico(ArrayList<Lexema> listaDeLexemas) {
-        String instruccionGuardada = "";
-        pila.add("Z");//Llenar la pila con el simbolo especial 
-        pila.add("S");//Llenar la pila con el sibolo inicial de la gramatica
-        for (int i = 0; i < listaDeLexemas.size();) {
-            if (buscarSimboloQuePuedaMoverseSinLectura() != null) {//Verificar si existe el movimiento automatico
-                switch (buscarSimaDePila()) {//Buscar transicion segun estado
-                    case "S":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S");
-                        break;
-                    case "S1":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S1");
-                        break;
-                    case "S2":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S2");
-                        break;
-                    case "S3":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S3");
-                        break;
-                    case "S4":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S4");
-                        break;
-                    case "S5":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S5");
-                        break;
-                    case "S6":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S6");
-                        break;
-                    case "S7":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S7");
-                        break;
-                    case "S8":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S8");
-                        break;
-                    case "S9":
-                        TransicionesNoTerminales.usarTransicionS(i, esLaPrimeraVezEntrandoAlMetodo, "S9");
-                        break;
-                    case "Z":
-                        desapilarSimaDePila();
-                        break;
-                }
-            } else if (verificarSiPilaEstaVacia()) {
-                System.out.println("PILA VACIA Y CARACTER ACEPTADO");
-                System.out.println("INSTRUCCION GUARDADA:" + instruccionGuardada);
-                instruccionGuardada = "";
-                pila.add("Z");//Llenar la pila con el simbolo especial 
-                pila.add("S");//Llenar la pila con el sibolo inicial de la gramatica
-                //Se acepta y se realiza la dicha accion
-                if ((i + 1) == listaDeLexemas.size()) {
-                    System.out.println("FIN DEL ANALISIS");
-                    i++;
-                } else {
-                    i++;
-                }
-            } else {//Tomar el simbolo actual
-                if (buscarSimaDePila().equals(listaDeLexemas.get(i).getLexema().toString())) {
-                    instruccionGuardada += listaDeLexemas.get(i).getLexema().toString() + " ";
-                    //Desapilar
-                    pila.remove(pila.size() - 1);
-                    //Aumentar al siguiente caracter
-                    if ((i + 1) == listaDeLexemas.size()) {
-                        System.out.println("ERROR NO SE HA PODIDO FORMAR UNA ESTRUCTURA");
-                        i++;
-                    } else {
-                        i++;
-                    }
-                    esLaPrimeraVezEntrandoAlMetodo = true;
-                } else {
-                    //Se debe visualizar si se pueden tomar otros caminos
-                    //Tomar la pila actual y pasarle la pila guardada
-                    cambioDePila();
-
-                }
-            }
-        }
-
+        System.out.println("FIN DEL ANALISIS SINTACTICO");
     }
 
     public static void cambioDePila() {
@@ -201,7 +131,8 @@ public class AnalizadorSintactico {
             pila.add("Z");//Llenar la pila con el simbolo especial 
             pila.add("S");//Llenar la pila con el sibolo inicial de la gramatica
             esLaPrimeraVezEntrandoAlMetodo = true;
-            System.out.println("Error");
+            System.out.println("ERROR LA ESTRUCTURA NO ES VALIDA:" + instruccionGuardada);
+            instruccionGuardada = "";
             posicionDeAnalisis++;
             //Mandar mensaje de Error
         }
@@ -277,6 +208,14 @@ public class AnalizadorSintactico {
 
     public static void setEsLaPrimeraVezEntrandoAlMetodo(boolean esLaPrimeraVezEntrandoAlMetodo) {
         AnalizadorSintactico.esLaPrimeraVezEntrandoAlMetodo = esLaPrimeraVezEntrandoAlMetodo;
+    }
+
+    public static int getPosicionDeAnalisis() {
+        return posicionDeAnalisis;
+    }
+
+    public static void setPosicionDeAnalisis(int posicionDeAnalisis) {
+        AnalizadorSintactico.posicionDeAnalisis = posicionDeAnalisis;
     }
 
 }
