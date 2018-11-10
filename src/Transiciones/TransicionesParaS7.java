@@ -8,7 +8,6 @@ package Transiciones;
 import java.util.ArrayList;
 import pruebajflex.AnalizadorSintactico;
 import pruebajflex.NoTerminales;
-import pruebajflex.RecolectorDePilas;
 import pruebajflex.Token;
 
 /**
@@ -17,15 +16,8 @@ import pruebajflex.Token;
  */
 public class TransicionesParaS7 {
 
-    private static int transicionA_Usar = 1;//Numero de transicion que se usara al inicio
-
-    public static ArrayList<String> usarTransicionS7() {
-        ArrayList<String> transiciones = new ArrayList<>();
-        if (transicionA_Usar == 1) {//Ingresa por primera vez a el metodo
-            AnalizadorSintactico.pilasUsadas.add(new RecolectorDePilas(AnalizadorSintactico.pila, "S7"));//Se anade la pila con la que se entra al metodo
-
-        } 
-        AnalizadorSintactico.desapilarSimaDePila();
+    
+    public static void transiciones(int transicionA_Usar, ArrayList<String> transiciones) {
         switch (transicionA_Usar) {
             case 1:
                 transiciones.add(Token.NUMERO_ENTERO_POSITIVO.toString());
@@ -42,13 +34,10 @@ public class TransicionesParaS7 {
                 transiciones.add(Token.PARENTESIS_CERRADO.toString());
                 break;
             default:
-                AnalizadorSintactico.pilasUsadas.remove(AnalizadorSintactico.pilasUsadas.size()-1);
+                AnalizadorSintactico.getPilasUsadas().remove(AnalizadorSintactico.getPilasUsadas().size() - 1);
                 AnalizadorSintactico.cambioDePila();
-                transicionA_Usar =1;
-                return null;
+                break;
         }
-        AnalizadorSintactico.insertarEnPila(transiciones);//Se isertan en pila los elementos
-        transicionA_Usar++;
-        return transiciones;
     }
+    
 }

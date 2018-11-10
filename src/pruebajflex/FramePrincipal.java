@@ -378,8 +378,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void analizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarButtonActionPerformed
         String texto = this.textoSinAnalizarTextArea.getText();
+        String texto2 = this.textoAnalizadoTextArea.getText();
         if (texto.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Aun no existe texto por analizar");
+        } else if (!texto2.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Presione nuevo analisis ara continuar");
         } else {
             boolean hayErrores = false;
             boolean seguir = true;
@@ -395,7 +398,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                     switch (miToken) {
                         case ERROR:
                             this.textoAnalizadoTextArea.append(escribirDatosDeAnalisisLexico(analizador.getLexemaActual()));
-                            hayErrores=true;
+                            hayErrores = true;
                             listaDeLexemas = new ArrayList<>();
                             break;
                         default:
@@ -411,9 +414,9 @@ public class FramePrincipal extends javax.swing.JFrame {
                 }
             }
         }
-        
+
         for (Lexema listaDeLexema : listaDeLexemas) {
-            System.out.println("Token:"+listaDeLexema.getLexema());   
+            System.out.println("Token:" + listaDeLexema.getLexema());
         }
 
     }//GEN-LAST:event_analizarButtonActionPerformed
@@ -536,7 +539,7 @@ public class FramePrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se puede crear el reporte");
         } else {
             JOptionPane.showMessageDialog(this, "Se pude crear el reporte");
-            listadoDeTokensJDialog nuevoReporte = new listadoDeTokensJDialog(this,true, this.listaDeLexemas);
+            listadoDeTokensJDialog nuevoReporte = new listadoDeTokensJDialog(this, true, this.listaDeLexemas);
             nuevoReporte.setVisible(true);
         }
     }//GEN-LAST:event_reporteDeTokensButtonActionPerformed
@@ -550,7 +553,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_acercaDeMenuItemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AnalizadorSintactico.realizarAnalisisSintactico(listaDeLexemas);
+        AnalizadorSintactico.realizarAnalisis(listaDeLexemas);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void accionAlCerrar() {

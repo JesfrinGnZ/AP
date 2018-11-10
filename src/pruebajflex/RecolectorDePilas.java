@@ -13,15 +13,25 @@ import java.util.ArrayList;
  */
 public class RecolectorDePilas {
     
+    private int posicionDeLexema;
     private ArrayList<String> pilaActual;
     private String tipoDeTransicion;
+    int opcionA_Usar;
 
-    public RecolectorDePilas( ArrayList<String> pilaActual, String tipoDeTransicion) {
+    public RecolectorDePilas( int posicionDeLexema,ArrayList<String> pilaActual, String tipoDeTransicion,int opcionA_Usar) {
         this.pilaActual = pilaActual;
         this.tipoDeTransicion = tipoDeTransicion;
+        this.opcionA_Usar=opcionA_Usar;
+        this.posicionDeLexema=posicionDeLexema;
     }
 
-    
+    public int getPosicionDeLexema() {
+        return posicionDeLexema;
+    }
+
+    public void setPosicionDeLexema(int posicionDeLexema) {
+        this.posicionDeLexema = posicionDeLexema;
+    }
     
     
     public ArrayList<String> getPilaActual() {
@@ -38,6 +48,14 @@ public class RecolectorDePilas {
 
     public void setTipoDeTransicion(String tipoDeTransicion) {
         this.tipoDeTransicion = tipoDeTransicion;
+    }
+
+    public int getOpcionA_Usar() {
+        return opcionA_Usar;
+    }
+
+    public void setOpcionA_Usar(int opcionA_Usar) {
+        this.opcionA_Usar = opcionA_Usar;
     }
 
 

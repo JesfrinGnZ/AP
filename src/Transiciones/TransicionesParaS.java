@@ -8,7 +8,6 @@ package Transiciones;
 import java.util.ArrayList;
 import pruebajflex.AnalizadorSintactico;
 import pruebajflex.NoTerminales;
-import pruebajflex.RecolectorDePilas;
 import pruebajflex.Token;
 
 /**
@@ -17,20 +16,9 @@ import pruebajflex.Token;
  */
 public class TransicionesParaS {
 
-    private static int transicionA_Usar=1;//Numero de transicion que se usara al inicio
-    /**
-     * Retorna un arreglo el cual contiene los terminales y no terminales que se
-     * ingresaran a la pila, segun un camino especificado
-     *
-     * @return
-     */
-    public static ArrayList<String> usarTransicionS() {
-        ArrayList<String> transiciones = new ArrayList<>();
-        if (transicionA_Usar == 1) {//Ingresa por primera vez a el metodo
-            AnalizadorSintactico.pilasUsadas.add(new RecolectorDePilas(AnalizadorSintactico.pila, "S"));//Se anade la pila con la que se entra al metodo
-        } 
-        AnalizadorSintactico.desapilarSimaDePila();
-        switch (transicionA_Usar) {//Se procede a anadir a la lista la combinacion de terminales y no terminales
+    
+    public static void transiciones(int transicionA_Usar,ArrayList<String> transiciones){
+                switch (transicionA_Usar) {//Se procede a anadir a la lista la combinacion de terminales y no terminales
             case 1:
                 transiciones.add(Token.IDENTIFICADOR.toString());
                 transiciones.add(Token.SIGNO_IGUAL.toString());
@@ -60,23 +48,9 @@ public class TransicionesParaS {
                 transiciones.add(NoTerminales.S9.toString());
                 break;
             default:
-                AnalizadorSintactico.pilasUsadas.remove(AnalizadorSintactico.pilasUsadas.size()-1);
+                AnalizadorSintactico.getPilasUsadas().remove(AnalizadorSintactico.getPilasUsadas().size()-1);
                 AnalizadorSintactico.cambioDePila();
-                transicionA_Usar =1;
-                return null;
+                break;
         }
-        AnalizadorSintactico.insertarEnPila(transiciones);//Se isertan en pila los elementos
-        transicionA_Usar++;//Aumentar la transicion, asi al volver se usara una distinta
-        return transiciones;
     }
-
-    public static int getTransicionA_Usar() {
-        return transicionA_Usar;
-    }
-
-    public static void setTransicionA_Usar(int transicionA_Usar) {
-        TransicionesParaS.transicionA_Usar = transicionA_Usar;
-    }
-
-    
 }
