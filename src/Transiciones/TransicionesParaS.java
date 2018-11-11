@@ -22,8 +22,8 @@ public class TransicionesParaS {
             case 1:
                 transiciones.add(Token.IDENTIFICADOR.toString());
                 transiciones.add(Token.SIGNO_IGUAL.toString());
-                transiciones.add(NoTerminales.S7.toString());
-                transiciones.add(NoTerminales.S9.toString());
+                transiciones.add(NoTerminales.S6.toString());
+                transiciones.add(Token.FIN.toString());
                 break;
             case 2:
                 transiciones.add(Token.ESCRIBIR.toString());

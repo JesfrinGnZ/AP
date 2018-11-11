@@ -15,7 +15,7 @@ import pruebajflex.RecolectorDePilas;
  */
 public class TransicionesNoTerminales {
 
-    public static ArrayList<String> usarTransicionS(int posicionDeLexema,boolean primeraVezEnElMetodo, String tipoDeTransicion) {
+    public static ArrayList<String> usarTransicionS(int posicionDeLexema, boolean primeraVezEnElMetodo, String tipoDeTransicion) {
         ArrayList<String> transiciones = new ArrayList<>();
         ArrayList<String> copiaDePila = new ArrayList<>();
         int transicionA_Usar;
@@ -23,7 +23,7 @@ public class TransicionesNoTerminales {
             for (String valorEnPila : AnalizadorSintactico.getPila()) {
                 copiaDePila.add(valorEnPila);
             }
-            AnalizadorSintactico.getPilasUsadas().add(new RecolectorDePilas(posicionDeLexema,copiaDePila, tipoDeTransicion, 1));//Se anade la pila con la que se entra al metodo
+            AnalizadorSintactico.getPilasUsadas().add(new RecolectorDePilas(posicionDeLexema, copiaDePila, tipoDeTransicion, 1));//Se anade la pila con la que se entra al metodo
             transicionA_Usar = 1;
         } else {
             RecolectorDePilas recolectorActual = AnalizadorSintactico.getPilasUsadas().get(AnalizadorSintactico.getPilasUsadas().size() - 1);
@@ -59,12 +59,24 @@ public class TransicionesNoTerminales {
             case "S8":
                 TransicionesParaS8.transiciones(transicionA_Usar, transiciones);
                 break;
-            case "S9":
-                TransicionesParaS9.transiciones(transicionA_Usar, transiciones);
-                break;
+//            case "S9":
+//                TransicionesParaS9.transiciones(transicionA_Usar, transiciones);
+//                break;
         }
         AnalizadorSintactico.insertarEnPila(transiciones);//Se isertan en pila los elementos
         //AnalizadorSintactico.setEsLaPrimeraVezEntrandoAlMetodo(true);
+//        String simaDePila = AnalizadorSintactico.buscarSimaDePila();
+//        if (!simaDePila.isEmpty()) {
+//            Integer miEntero = 1;
+//            for (int i = 1; i < 10; i++) {//Comprobar si la sima de pila es un no terminal distinto de los dos anteriores
+//                String cadenaS = "S" + miEntero.toString();
+//                if (simaDePila.equals(cadenaS)) {
+//                    AnalizadorSintactico.setEsLaPrimeraVezEntrandoAlMetodo(true);
+//                } else {
+//                    miEntero++;
+//                }
+//            }
+//        }
         return transiciones;
     }
 

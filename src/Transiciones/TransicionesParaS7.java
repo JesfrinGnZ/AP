@@ -16,22 +16,19 @@ import pruebajflex.Token;
  */
 public class TransicionesParaS7 {
 
-    
     public static void transiciones(int transicionA_Usar, ArrayList<String> transiciones) {
         switch (transicionA_Usar) {
             case 1:
                 transiciones.add(Token.NUMERO_ENTERO_POSITIVO.toString());
+                transiciones.add(NoTerminales.S8.toString());
                 break;
             case 2:
-                transiciones.add(Token.NUMERO_ENTERO_NEGATIVO.toString());
+                transiciones.add(Token.IDENTIFICADOR.toString());
+                transiciones.add(NoTerminales.S8.toString());
                 break;
             case 3:
-                transiciones.add(Token.IDENTIFICADOR.toString());
-                break;
-            case 4:
-                transiciones.add(Token.PARENTESIS_ABIERTO.toString());
-                transiciones.add(NoTerminales.S6.toString());
-                transiciones.add(Token.PARENTESIS_CERRADO.toString());
+                transiciones.add(Token.NUMERO_ENTERO_NEGATIVO.toString());
+                transiciones.add(NoTerminales.S8.toString());
                 break;
             default:
                 AnalizadorSintactico.getPilasUsadas().remove(AnalizadorSintactico.getPilasUsadas().size() - 1);
@@ -39,5 +36,5 @@ public class TransicionesParaS7 {
                 break;
         }
     }
-    
+
 }

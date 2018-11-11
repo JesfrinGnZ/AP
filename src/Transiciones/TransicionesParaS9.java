@@ -19,14 +19,11 @@ public class TransicionesParaS9 {
     public static void transiciones(int transicionA_Usar, ArrayList<String> transiciones) {
         switch (transicionA_Usar) {
             case 1:
-                transiciones.add(Token.SIGNO_SUMA.toString());
-                transiciones.add(NoTerminales.S7.toString());
-                transiciones.add(Token.FIN.toString());
+                transiciones.add(NoTerminales.S8.toString());
+                transiciones.add(NoTerminales.S9.toString());
                 break;
             case 2:
-                transiciones.add(Token.SIGNO_MULTIPLICACION.toString());
-                transiciones.add(NoTerminales.S7.toString());
-                transiciones.add(Token.FIN.toString());
+                transiciones.add(NoTerminales.S8.toString());
                 break;
             default:
                 AnalizadorSintactico.getPilasUsadas().remove(AnalizadorSintactico.getPilasUsadas().size() - 1);

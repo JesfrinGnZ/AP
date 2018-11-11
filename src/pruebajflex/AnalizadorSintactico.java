@@ -59,9 +59,9 @@ public class AnalizadorSintactico {
                     case "S8":
                         TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S8");
                         break;
-                    case "S9":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S9");
-                        break;
+//                    case "S9":
+//                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S9");
+//                        break;
                     case "Z":
                         desapilarSimaDePila();
                         break;
@@ -145,7 +145,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private static String buscarSimaDePila() {
+    public static String buscarSimaDePila() {
         String sima = null;
         if (!pila.isEmpty()) {
             sima = pila.get(pila.size() - 1);
@@ -166,7 +166,7 @@ public class AnalizadorSintactico {
      *
      * @return
      */
-    private static String buscarSimboloQuePuedaMoverseSinLectura() {
+    public static String buscarSimboloQuePuedaMoverseSinLectura() {
         String simaDePila = buscarSimaDePila();
         Integer miEntero = 1;
         if (simaDePila == null) {
