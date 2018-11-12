@@ -16,7 +16,7 @@ public class AnalizadorSintactico {
 
     private static ArrayList<RecolectorDePilas> pilasUsadas = new ArrayList<>();//Pilas que se usaro con anterioridad
     private static ArrayList<String> pila = new ArrayList<>();//Pila donde se isertara y eliminaran elementos
-    private static boolean esLaPrimeraVezEntrandoAlMetodo = true;//Verifica que camino se debe tomar, si hay multiples caminos
+    private static boolean esLaPrimeraVezEntrandoAlMetodo = true;//Verifica que camino se debe tomar si hay multiples caminos, ya que si es la primera vez entrando al metodo se creara una copia de la pila
     private static int posicionDeAnalisis;
     private static String instruccionGuardada;
 
@@ -33,31 +33,31 @@ public class AnalizadorSintactico {
             if (buscarSimboloQuePuedaMoverseSinLectura() != null) {
                 switch (buscarSimaDePila()) {//Buscar transicion segun estado no terminal, movimiento automatico
                     case "S":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S");
+                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis,instruccionGuardada, esLaPrimeraVezEntrandoAlMetodo, "S");
                         break;
                     case "S1":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S1");
+                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis,instruccionGuardada, esLaPrimeraVezEntrandoAlMetodo, "S1");
                         break;
                     case "S2":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S2");
+                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis,instruccionGuardada, esLaPrimeraVezEntrandoAlMetodo, "S2");
                         break;
                     case "S3":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S3");
+                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis,instruccionGuardada, esLaPrimeraVezEntrandoAlMetodo, "S3");
                         break;
                     case "S4":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S4");
+                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis,instruccionGuardada, esLaPrimeraVezEntrandoAlMetodo, "S4");
                         break;
                     case "S5":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S5");
+                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis,instruccionGuardada, esLaPrimeraVezEntrandoAlMetodo, "S5");
                         break;
                     case "S6":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S6");
+                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis,instruccionGuardada, esLaPrimeraVezEntrandoAlMetodo, "S6");
                         break;
                     case "S7":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S7");
+                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis,instruccionGuardada, esLaPrimeraVezEntrandoAlMetodo, "S7");
                         break;
                     case "S8":
-                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S8");
+                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis,instruccionGuardada, esLaPrimeraVezEntrandoAlMetodo, "S8");
                         break;
 //                    case "S9":
 //                        TransicionesNoTerminales.usarTransicionS(posicionDeAnalisis, esLaPrimeraVezEntrandoAlMetodo, "S9");
@@ -115,14 +115,15 @@ public class AnalizadorSintactico {
 
     public static void cambioDePila() {
         if (!pilasUsadas.isEmpty()) {
-            ArrayList<String> pilaNueva = new ArrayList<>();
+            ArrayList<String> pilaNueva = new ArrayList<>();//Nueva direccion para pila nueva
             pilaNueva = pilasUsadas.get(pilasUsadas.size() - 1).getPilaActual();
-            pila = new ArrayList<>();
+            pila = new ArrayList<>();//Nueva direccion para pila, que tendra los valores anteriores de la pila q se uso anteriormente
             for (String datoDePila : pilaNueva) {
                 pila.add(datoDePila);
             }
-            esLaPrimeraVezEntrandoAlMetodo = false;
-            posicionDeAnalisis = pilasUsadas.get(pilasUsadas.size() - 1).getPosicionDeLexema();
+            esLaPrimeraVezEntrandoAlMetodo = false;//Se cambio a falso para que tome un nuevo camino
+            posicionDeAnalisis = pilasUsadas.get(pilasUsadas.size() - 1).getPosicionDeLexema();//El analisis se cambia a la posicion de la pila usada con anterioridad
+            instruccionGuardada = pilasUsadas.get(pilasUsadas.size() - 1).getInstruccionActual();//La instruccion vuelve a ser la que se tenia en la pila usada anteriormente
         } else {
             //Se debe comenzar el analisis en la posicion i+1
             //Pila vuelve a llenarse 
@@ -132,9 +133,8 @@ public class AnalizadorSintactico {
             pila.add("S");//Llenar la pila con el sibolo inicial de la gramatica
             esLaPrimeraVezEntrandoAlMetodo = true;
             System.out.println("ERROR LA ESTRUCTURA NO ES VALIDA:" + instruccionGuardada);
-            instruccionGuardada = "";
+            instruccionGuardada = "";//Reinicio de valores
             posicionDeAnalisis++;
-            //Mandar mensaje de Error
         }
     }
 

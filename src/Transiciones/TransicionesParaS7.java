@@ -17,7 +17,7 @@ import pruebajflex.Token;
 public class TransicionesParaS7 {
 
     public static void transiciones(int transicionA_Usar, ArrayList<String> transiciones) {
-        switch (transicionA_Usar) {
+        switch (transicionA_Usar) {//Se procede a anadir a la lista la combinacion de terminales y no terminales
             case 1:
                 transiciones.add(Token.NUMERO_ENTERO_POSITIVO.toString());
                 transiciones.add(NoTerminales.S8.toString());

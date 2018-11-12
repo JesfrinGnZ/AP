@@ -8,7 +8,6 @@ package Transiciones;
 import java.util.ArrayList;
 import pruebajflex.AnalizadorSintactico;
 import pruebajflex.NoTerminales;
-import pruebajflex.Token;
 
 /**
  *

@@ -15,22 +15,22 @@ import pruebajflex.RecolectorDePilas;
  */
 public class TransicionesNoTerminales {
 
-    public static ArrayList<String> usarTransicionS(int posicionDeLexema, boolean primeraVezEnElMetodo, String tipoDeTransicion) {
-        ArrayList<String> transiciones = new ArrayList<>();
-        ArrayList<String> copiaDePila = new ArrayList<>();
+    public static ArrayList<String> usarTransicionS(int posicionDeLexema, String instruccionActual,boolean primeraVezEnElMetodo, String tipoDeTransicion) {
+        ArrayList<String> transiciones = new ArrayList<>();//Guardara los elementos de la transicion en turno
+        ArrayList<String> copiaDePila = new ArrayList<>();//Nueva direccion para una pila
         int transicionA_Usar;
-        if (primeraVezEnElMetodo) {//Ingresa por primera vez a el metodo
+        if (primeraVezEnElMetodo) {//Ingresa por primera vez a el metodo, por lo que tomara el primer camino, y se creara la copia de la pila que entra al metodo
             for (String valorEnPila : AnalizadorSintactico.getPila()) {
                 copiaDePila.add(valorEnPila);
             }
-            AnalizadorSintactico.getPilasUsadas().add(new RecolectorDePilas(posicionDeLexema, copiaDePila, tipoDeTransicion, 1));//Se anade la pila con la que se entra al metodo
+            AnalizadorSintactico.getPilasUsadas().add(new RecolectorDePilas(posicionDeLexema,instruccionActual, copiaDePila, tipoDeTransicion, 1));//Se anade la pila con la que se entra al metodo
             transicionA_Usar = 1;
-        } else {
+        } else {//Ingresa por N-esima vez al metodo, y el camino se halla, buscando la pila que se ha usado anteriormente y sumandole 1 a su camino actual
             RecolectorDePilas recolectorActual = AnalizadorSintactico.getPilasUsadas().get(AnalizadorSintactico.getPilasUsadas().size() - 1);
             recolectorActual.setOpcionA_Usar(recolectorActual.getOpcionA_Usar() + 1);
             transicionA_Usar = recolectorActual.getOpcionA_Usar();
         }
-        AnalizadorSintactico.desapilarSimaDePila();
+        AnalizadorSintactico.desapilarSimaDePila();//Se elimina el elemento no terminal de la pila actual
         switch (tipoDeTransicion) {
             case "S":
                 TransicionesParaS.transiciones(transicionA_Usar, transiciones);
@@ -59,24 +59,8 @@ public class TransicionesNoTerminales {
             case "S8":
                 TransicionesParaS8.transiciones(transicionA_Usar, transiciones);
                 break;
-//            case "S9":
-//                TransicionesParaS9.transiciones(transicionA_Usar, transiciones);
-//                break;
         }
         AnalizadorSintactico.insertarEnPila(transiciones);//Se isertan en pila los elementos
-        //AnalizadorSintactico.setEsLaPrimeraVezEntrandoAlMetodo(true);
-//        String simaDePila = AnalizadorSintactico.buscarSimaDePila();
-//        if (!simaDePila.isEmpty()) {
-//            Integer miEntero = 1;
-//            for (int i = 1; i < 10; i++) {//Comprobar si la sima de pila es un no terminal distinto de los dos anteriores
-//                String cadenaS = "S" + miEntero.toString();
-//                if (simaDePila.equals(cadenaS)) {
-//                    AnalizadorSintactico.setEsLaPrimeraVezEntrandoAlMetodo(true);
-//                } else {
-//                    miEntero++;
-//                }
-//            }
-//        }
         return transiciones;
     }
 
