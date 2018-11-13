@@ -13,11 +13,11 @@ import java.util.ArrayList;
  */
 public class RecolectorDePilas {
     
-    private int posicionDeLexema;
-    private String instruccionActual;
-    private ArrayList<String> pilaActual;
-    private String tipoDeTransicion;
-    int opcionA_Usar;
+    private int posicionDeLexema;//Caracter donde va la lectura
+    private String instruccionActual;//Estructura que ya se ha formado
+    private ArrayList<String> pilaActual;//Valores de la pila
+    private String tipoDeTransicion;//Transicion a la que corresponde el recolector
+    int opcionA_Usar;//La transicion que ya ha se ha usado, o con la que se termino un analisis
 
     public RecolectorDePilas( int posicionDeLexema,String instruccionActual,ArrayList<String> pilaActual, String tipoDeTransicion,int opcionA_Usar) {
         this.instruccionActual = instruccionActual;

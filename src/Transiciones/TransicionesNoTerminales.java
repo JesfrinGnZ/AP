@@ -6,6 +6,7 @@
 package Transiciones;
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 import pruebajflex.AnalizadorSintactico;
 import pruebajflex.RecolectorDePilas;
 
@@ -15,7 +16,7 @@ import pruebajflex.RecolectorDePilas;
  */
 public class TransicionesNoTerminales {
 
-    public static ArrayList<String> usarTransicionS(int posicionDeLexema, String instruccionActual,boolean primeraVezEnElMetodo, String tipoDeTransicion) {
+    public static ArrayList<String> usarTransicionS(int posicionDeLexema, String instruccionActual,boolean primeraVezEnElMetodo, String tipoDeTransicion,JTextArea analisisSintacticoTextArea) {
         ArrayList<String> transiciones = new ArrayList<>();//Guardara los elementos de la transicion en turno
         ArrayList<String> copiaDePila = new ArrayList<>();//Nueva direccion para una pila
         int transicionA_Usar;
@@ -33,31 +34,31 @@ public class TransicionesNoTerminales {
         AnalizadorSintactico.desapilarSimaDePila();//Se elimina el elemento no terminal de la pila actual
         switch (tipoDeTransicion) {
             case "S":
-                TransicionesParaS.transiciones(transicionA_Usar, transiciones);
+                TransicionesParaS.transiciones(transicionA_Usar, transiciones, analisisSintacticoTextArea);
                 break;
             case "S1":
-                TransicionesParaS1.transiciones(transicionA_Usar, transiciones);
+                TransicionesParaS1.transiciones(transicionA_Usar, transiciones, analisisSintacticoTextArea);
                 break;
             case "S2":
-                TransicionesParaS2.transiciones(transicionA_Usar, transiciones);
+                TransicionesParaS2.transiciones(transicionA_Usar, transiciones, analisisSintacticoTextArea);
                 break;
             case "S3":
-                TransicionesParaS3.transiciones(transicionA_Usar, transiciones);
+                TransicionesParaS3.transiciones(transicionA_Usar, transiciones, analisisSintacticoTextArea);
                 break;
             case "S4":
-                TransicionesParaS4.transiciones(transicionA_Usar, transiciones);
+                TransicionesParaS4.transiciones(transicionA_Usar, transiciones, analisisSintacticoTextArea);
                 break;
             case "S5":
-                TransicionesParaS5.transiciones(transicionA_Usar, transiciones);
+                TransicionesParaS5.transiciones(transicionA_Usar, transiciones, analisisSintacticoTextArea);
                 break;
             case "S6":
-                TransicionesParaS6.transiciones(transicionA_Usar, transiciones);
+                TransicionesParaS6.transiciones(transicionA_Usar, transiciones, analisisSintacticoTextArea);
                 break;
             case "S7":
-                TransicionesParaS7.transiciones(transicionA_Usar, transiciones);
+                TransicionesParaS7.transiciones(transicionA_Usar, transiciones, analisisSintacticoTextArea);
                 break;
             case "S8":
-                TransicionesParaS8.transiciones(transicionA_Usar, transiciones);
+                TransicionesParaS8.transiciones(transicionA_Usar, transiciones, analisisSintacticoTextArea);
                 break;
         }
         AnalizadorSintactico.insertarEnPila(transiciones);//Se isertan en pila los elementos

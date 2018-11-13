@@ -37,9 +37,9 @@ LETRA=[a-zA-Z]
         "VERDADERO"  {lexemaActual = new Lexema(yytext(),Token.VERDADERO, yycolumn+1, yyline +1); return Token.VERDADERO;}
         "FALSO"  {lexemaActual = new Lexema(yytext(),Token.FALSO, yycolumn+1, yyline +1); return Token.FALSO;}
         "ENTONCES"  {lexemaActual = new Lexema(yytext(),Token.ENTONCES, yycolumn+1, yyline +1); return Token.ENTONCES;}
-        "\""[^\n]*"\"" {lexemaActual = new Lexema(yytext(),Token.LITERAL, yycolumn+1, yyline +1); return Token.LITERAL;}
+        ["\""].*["\""] {lexemaActual = new Lexema(yytext(),Token.LITERAL, yycolumn+1, yyline +1); return Token.LITERAL;}
         ([_]|{LETRA}) (({LETRA}|{DIGITO}|[-]|[_])*)? {lexemaActual = new Lexema(yytext(),Token.IDENTIFICADOR, yycolumn+1, yyline +1); return Token.IDENTIFICADOR;}
-        [//][^]*("\n"?)    {lexemaActual = new Lexema(yytext(),Token.COMENTARIO_DE_UNA_LINEA, yycolumn+1, yyline +1); return Token.COMENTARIO_DE_UNA_LINEA;}
+        [/][/].*["\n"$]    {lexemaActual = new Lexema(yytext(),Token.COMENTARIO_DE_UNA_LINEA, yycolumn+1, yyline +1); return Token.COMENTARIO_DE_UNA_LINEA;}
         "("  {lexemaActual = new Lexema(yytext(),Token.PARENTESIS_ABIERTO, yycolumn+1, yyline +1); return Token.PARENTESIS_ABIERTO;}
         ")"  {lexemaActual = new Lexema(yytext(),Token.PARENTESIS_CERRADO, yycolumn+1, yyline +1); return Token.PARENTESIS_CERRADO;}
         "="  {lexemaActual = new Lexema(yytext(),Token.SIGNO_IGUAL, yycolumn+1, yyline +1); return Token.SIGNO_IGUAL;}

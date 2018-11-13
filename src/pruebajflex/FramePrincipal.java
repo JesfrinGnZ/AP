@@ -5,7 +5,6 @@
  */
 package pruebajflex;
 
-import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -15,16 +14,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultHighlighter;
-import javax.swing.text.Highlighter;
 import javax.swing.undo.UndoManager;
 import pruebajflex.Token;
 
@@ -75,18 +70,18 @@ public class FramePrincipal extends javax.swing.JFrame {
         erroresLabel = new javax.swing.JLabel();
         analisisCompletoLabel = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        erroresTextArea = new javax.swing.JTextArea();
+        analisisSintacticoTextArea = new javax.swing.JTextArea();
         numeroDeFilaLabel = new javax.swing.JLabel();
         numeroDeColumnaLabel = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         analizarButton = new javax.swing.JButton();
         reporteDeTokensButton = new javax.swing.JButton();
         nuevoAnalisisButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         estLabel = new javax.swing.JLabel();
         estadoGuardadoLabel = new javax.swing.JLabel();
         archivoActualLabel = new javax.swing.JLabel();
         archActualLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         miMenuBar = new javax.swing.JMenuBar();
         archivoMenu = new javax.swing.JMenu();
         cargarArchivoMenuItem = new javax.swing.JMenuItem();
@@ -132,13 +127,15 @@ public class FramePrincipal extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         textoAnalizadoTextArea.setEditable(false);
@@ -146,13 +143,13 @@ public class FramePrincipal extends javax.swing.JFrame {
         textoAnalizadoTextArea.setRows(5);
         jScrollPane2.setViewportView(textoAnalizadoTextArea);
 
-        erroresLabel.setText("Errores analisis lexico:");
+        erroresLabel.setText("Análisis sintactico:");
 
-        analisisCompletoLabel.setText("Analisis lexico:");
+        analisisCompletoLabel.setText("Análisis lexico:");
 
-        erroresTextArea.setColumns(20);
-        erroresTextArea.setRows(5);
-        jScrollPane3.setViewportView(erroresTextArea);
+        analisisSintacticoTextArea.setColumns(20);
+        analisisSintacticoTextArea.setRows(5);
+        jScrollPane3.setViewportView(analisisSintacticoTextArea);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -167,9 +164,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(erroresLabel)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -181,7 +176,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(erroresLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -216,10 +211,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         });
         jToolBar1.add(nuevoAnalisisButton);
 
-        estLabel.setText("Estado:");
-
-        archivoActualLabel.setText("Archivo actual:");
-
         jButton1.setText("Analisis sintactico");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -229,6 +220,11 @@ public class FramePrincipal extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jToolBar1.add(jButton1);
+
+        estLabel.setText("Estado:");
+
+        archivoActualLabel.setText("Archivo actual:");
 
         archivoMenu.setText("Archivo");
 
@@ -321,25 +317,20 @@ public class FramePrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(numeroDeFilaLabel)
+                    .addComponent(numeroDeColumnaLabel)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(numeroDeFilaLabel)
-                            .addComponent(numeroDeColumnaLabel)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(estLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(estadoGuardadoLabel))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(archivoActualLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(archActualLabel))
-                            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(estLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(estadoGuardadoLabel))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)))
+                        .addComponent(archivoActualLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(archActualLabel))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -347,10 +338,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(numeroDeFilaLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(numeroDeColumnaLabel)
@@ -363,14 +352,10 @@ public class FramePrincipal extends javax.swing.JFrame {
                             .addComponent(archivoActualLabel)
                             .addComponent(archActualLabel))
                         .addGap(18, 18, 18)
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(309, 309, 309))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -429,7 +414,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void nuevoAnalisisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAnalisisButtonActionPerformed
         if (seHaTerminadoElAnalisis) {
             this.textoAnalizadoTextArea.setText("");
-            this.erroresTextArea.setText("");
+            this.analisisSintacticoTextArea.setText("");
             this.seHaTerminadoElAnalisis = false;
             this.listaDeLexemas = new ArrayList<>();
         } else {
@@ -553,7 +538,26 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_acercaDeMenuItemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AnalizadorSintactico.realizarAnalisis(listaDeLexemas);
+        if (listaDeLexemas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El analisis lexico no concluyo con exito, compruebe sus errores para continuar.");
+        } else {
+            ArrayList<Lexema> listaSinComentarios = new ArrayList<>();
+            for (Lexema lexemaActual : listaDeLexemas) {
+                if (!lexemaActual.getLexema().toString().equals(Token.COMENTARIO_DE_UNA_LINEA.toString())) {
+                    listaSinComentarios.add(lexemaActual);
+                }
+            }
+
+            for (Lexema listaSinComentario : listaSinComentarios) {
+                System.out.println("ELEMNETO LISTA SIN COMENTARIOS:" + listaSinComentario.getToken());
+            }
+            JFileChooser file = new JFileChooser();
+            file.showSaveDialog(this);
+            File ruta = file.getSelectedFile();
+            System.out.println("RUTA:"+ruta);
+            AnalizadorSintactico.setRutaDeArchivoDeSalida(ruta);
+            AnalizadorSintactico.realizarAnalisis(listaSinComentarios, analisisSintacticoTextArea);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void accionAlCerrar() {
@@ -626,6 +630,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem acercaDeMenuItem;
     private javax.swing.JLabel analisisCompletoLabel;
+    private javax.swing.JTextArea analisisSintacticoTextArea;
     private javax.swing.JButton analizarButton;
     private javax.swing.JLabel archActualLabel;
     private javax.swing.JLabel archivoActualLabel;
@@ -634,7 +639,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem copiarMenuItem;
     private javax.swing.JMenuItem deshacerMenuItem;
     private javax.swing.JLabel erroresLabel;
-    private javax.swing.JTextArea erroresTextArea;
     private javax.swing.JLabel estLabel;
     private javax.swing.JLabel estadoGuardadoLabel;
     private javax.swing.JMenuItem guardarComoMenuItem;
@@ -670,7 +674,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     public void escribirError(String textoAnalizado) {
-        this.erroresTextArea.append(textoAnalizado);
+        this.analisisSintacticoTextArea.append(textoAnalizado);
     }
 
     public void oyenteDeEdicion() {

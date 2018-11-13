@@ -6,6 +6,7 @@
 package Transiciones;
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 import pruebajflex.AnalizadorSintactico;
 import pruebajflex.Token;
 
@@ -16,7 +17,7 @@ import pruebajflex.Token;
 public class TransicionesParaS1 {
 
  
-    public static void transiciones(int transicionA_Usar, ArrayList<String> transiciones) {
+    public static void transiciones(int transicionA_Usar, ArrayList<String> transiciones,JTextArea analisisSintacticoTextArea) {
         switch (transicionA_Usar) {
             case 1:
                 transiciones.add(Token.LITERAL.toString());
@@ -38,7 +39,7 @@ public class TransicionesParaS1 {
                 break;
             default:
                 AnalizadorSintactico.getPilasUsadas().remove(AnalizadorSintactico.getPilasUsadas().size() - 1);
-                AnalizadorSintactico.cambioDePila();
+                AnalizadorSintactico.cambioDePila(analisisSintacticoTextArea);
                 break;
         }
     }

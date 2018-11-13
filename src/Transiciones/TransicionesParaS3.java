@@ -6,6 +6,7 @@
 package Transiciones;
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 import pruebajflex.AnalizadorSintactico;
 import pruebajflex.NoTerminales;
 import pruebajflex.Token;
@@ -18,7 +19,7 @@ public class TransicionesParaS3 {
 
 
 
-    public static void transiciones(int transicionA_Usar, ArrayList<String> transiciones) {
+    public static void transiciones(int transicionA_Usar, ArrayList<String> transiciones,JTextArea analisisSintacticoTextArea) {
         switch (transicionA_Usar) {//Se procede a anadir a la lista la combinacion de terminales y no terminales
             case 1:
                 transiciones.add(Token.ESCRIBIR.toString());
@@ -30,7 +31,7 @@ public class TransicionesParaS3 {
                 break;
             default:
                 AnalizadorSintactico.getPilasUsadas().remove(AnalizadorSintactico.getPilasUsadas().size() - 1);
-                AnalizadorSintactico.cambioDePila();
+                AnalizadorSintactico.cambioDePila(analisisSintacticoTextArea);
                 break;
         }
     }
