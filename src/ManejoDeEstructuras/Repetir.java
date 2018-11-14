@@ -23,7 +23,12 @@ public class Repetir extends Estructura {
         if (getListaDeLexemas().get(1).getLexema().toString().equals("NUMERO_ENTERO_POSITIVO")) {//Buscar el numero de repeticiones
             numeroDeRepeticion = Integer.parseInt(getListaDeLexemas().get(1).getToken());
         } else {//Era un identificador
-            //Buscar identificador
+            for (Identificador identificador : listaDeIdentificadores) {
+                if(identificador.getNombre().equals(getListaDeLexemas().get(1).getToken())){
+                    numeroDeRepeticion=identificador.getValor();
+                    break;
+                }
+            }
         }
         //Eliminando partes de estructura
         getListaDeLexemas().remove(0);//Eliminar Repetir
