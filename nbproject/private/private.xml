@@ -5,15 +5,14 @@
         <group>
             <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/ManejoDeEstructuras/Repetir.java</file>
             <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/ManejoDeEstructuras/Escritura.java</file>
-            <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/ManejoDeEstructuras/Estructura.java</file>
             <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/ManejoDeEstructuras/Asignacion.java</file>
+            <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/ManejoDeEstructuras/Estructura.java</file>
+            <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/Transiciones/TransicionesNoTerminales.java</file>
             <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/ManejoDeEstructuras/Identificador.java</file>
             <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/ManejoDeEstructuras/ManejadorDeEscritura.java</file>
             <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/pruebajflex/AnalizadorSintactico.java</file>
-            <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/pruebajflex/Token.java</file>
             <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/ManejoDeEstructuras/Condicional.java</file>
-            <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/pruebajflex/Lexer.flex</file>
-            <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/pruebajflex/FramePrincipal.java</file>
+            <file>file:/home/jesfrin/NetBeansProjects/PruebaJflex/src/pruebajflex/DirectorioPorDefecto.java</file>
         </group>
     </open-files>
 </project-private>

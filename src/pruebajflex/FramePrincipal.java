@@ -8,6 +8,7 @@ package pruebajflex;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -556,7 +557,24 @@ public class FramePrincipal extends javax.swing.JFrame {
             File ruta = file.getSelectedFile();
             System.out.println("RUTA:"+ruta);
             AnalizadorSintactico.setRutaDeArchivoDeSalida(ruta);
-            AnalizadorSintactico.realizarAnalisis(listaSinComentarios, analisisSintacticoTextArea);
+            ArrayList<String> instrucciones=AnalizadorSintactico.realizarAnalisis(listaSinComentarios, analisisSintacticoTextArea);
+            if(!instrucciones.isEmpty()){
+                        try {
+            if(!ruta.exists()){
+                ruta.createNewFile();
+            }
+            BufferedWriter bw;
+            bw = new BufferedWriter(new FileWriter(ruta,true));
+            for (String string : instrucciones) {
+                bw.write(string+"\n");
+            }
+            bw.close();
+        } catch (Exception e) {
+            System.out.println("Algo ha salido mal :(");
+        }
+            }else{
+                JOptionPane.showMessageDialog(this, "No se ha creado el archivo ya que existen errores sintacticos");
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

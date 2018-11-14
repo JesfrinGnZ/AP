@@ -32,7 +32,7 @@ public class AnalizadorSintactico {
     private static String instruccionGuardada;
     private static boolean hayErrores = false;
 
-    public static void realizarAnalisis(ArrayList<Lexema> listaDeLexemas, JTextArea analisisSintacticoTextArea) {
+    public static ArrayList<String> realizarAnalisis(ArrayList<Lexema> listaDeLexemas, JTextArea analisisSintacticoTextArea) {
         pila = new ArrayList<>();
         pilasUsadas = new ArrayList<>();
         estructurasFormadas = new ArrayList<>();
@@ -137,6 +137,7 @@ public class AnalizadorSintactico {
         System.out.println("FIN DEL ANALISIS SINTACTICO");
         ManejadorDeEscritura nuevaEscritura = new ManejadorDeEscritura(estructurasFormadas, new File(""));
          nuevaEscritura.evaluarEstructuras();
+         return nuevaEscritura.getInstruccionesDeSalida();
 //        for (Estructura estructurasFormada : estructurasFormadas) {
 //            if (estructurasFormada instanceof Asignacion) {
 //                System.out.println("ASIGNACION");
