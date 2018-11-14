@@ -18,7 +18,7 @@ public class Escritura extends Estructura {
         super(listaDeLexemas);
     }
 
-    public void descomponerEscritura(ArrayList<String> instruccionesDeSalida) {
+    public void descomponerEscritura(ArrayList<String> instruccionesDeSalida,ArrayList<Identificador> listaDeIdentificadores) {
         Lexema lexemaA_Escribir = getListaDeLexemas().get(1);
         switch (lexemaA_Escribir.getLexema()) {
             case LITERAL:
@@ -32,8 +32,22 @@ public class Escritura extends Estructura {
                 instruccionesDeSalida.add(lexemaA_Escribir.getToken()+"\n");
                 break;
             case IDENTIFICADOR:
+                boolean seEncontroId=false;
+                for (Identificador identificador : listaDeIdentificadores) {
+                    if(lexemaA_Escribir.getToken().equals(identificador.getNombre())){
+                        instruccionesDeSalida.add(String.valueOf(identificador.getValor()));
+                        seEncontroId=true;
+                        break;
+                    }
+                }
+                if(!seEncontroId){
+                    instruccionesDeSalida.add("0");
+                }
                 break;
         }
     }
 
+    public static void descomponerEscritura(String instruccion){
+        
+    }
 }

@@ -18,35 +18,38 @@ public class ManejadorDeEscritura {
     private ArrayList<Estructura> listaDeEstructuras;
     private ArrayList<String> instruccionesDeSalida;
 
-    public ManejadorDeEscritura(ArrayList<Identificador> listaDeIdentificadores, ArrayList<Estructura> listaDeEstructuras, File rutaDeSalida) {
-        this.listaDeIdentificadores = listaDeIdentificadores;
+    public ManejadorDeEscritura( ArrayList<Estructura> listaDeEstructuras, File rutaDeSalida) {
+        this.listaDeIdentificadores = new ArrayList<>();
         this.listaDeEstructuras = listaDeEstructuras;
         instruccionesDeSalida = new ArrayList<>();
-        evaluarEstructuras();
     }
     
     public void evaluarEstructuras(){
         for (Estructura estructura : listaDeEstructuras) {
             if(estructura instanceof Escritura){ 
                 Escritura nuevaEscritura = new Escritura(estructura.getListaDeLexemas());
-                nuevaEscritura.descomponerEscritura(instruccionesDeSalida);
+                nuevaEscritura.descomponerEscritura(instruccionesDeSalida,listaDeIdentificadores);
             }else if(estructura instanceof Asignacion){
-                Asignacion nuevaAsignacion = new Asignacion(estructura.getListaDeLexemas());
-                listaDeIdentificadores.add(nuevaAsignacion.descomponerIdentificador());
+                ((Asignacion) estructura).descomponerIdentificador(listaDeIdentificadores);
             }else if(estructura instanceof Condicional){
                 Condicional nuevaCondicion = new Condicional(estructura.getListaDeLexemas());
-                nuevaCondicion.descomponerCondicion(instruccionesDeSalida);
+                nuevaCondicion.descomponerCondicion(instruccionesDeSalida,listaDeIdentificadores);
             }else if(estructura instanceof Repetir){
                 Repetir nuevaRepeticion = new Repetir(estructura.getListaDeLexemas());
-                nuevaRepeticion.descomponerRepeticion(instruccionesDeSalida);
+                nuevaRepeticion.descomponerRepeticion(instruccionesDeSalida,listaDeIdentificadores);
             }
         }
         escribirTextoEnArchivo();
     }
     
     public void escribirTextoEnArchivo(){
+        System.out.println("INSTRUCCIONES***********************************ESCRITURA");
         for (String string : instruccionesDeSalida) {
             System.out.println(string);
+        }
+        System.out.println("IDENTIFICADORES*************************************");
+        for (Identificador listaDeIdentificadore : listaDeIdentificadores) {
+            System.out.println("ID:"+listaDeIdentificadore.getNombre()+":"+listaDeIdentificadore.getValor());
         }
     }
 

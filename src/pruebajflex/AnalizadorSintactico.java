@@ -9,6 +9,7 @@ import ManejoDeEstructuras.Asignacion;
 import ManejoDeEstructuras.Condicional;
 import ManejoDeEstructuras.Escritura;
 import ManejoDeEstructuras.Estructura;
+import ManejoDeEstructuras.ManejadorDeEscritura;
 import ManejoDeEstructuras.Repetir;
 import Transiciones.TransicionesNoTerminales;
 import java.io.File;
@@ -25,7 +26,7 @@ public class AnalizadorSintactico {
     private static ArrayList<RecolectorDePilas> pilasUsadas = new ArrayList<>();//Pilas que se usaro con anterioridad
     private static ArrayList<String> pila = new ArrayList<>();//Pila donde se isertara y eliminaran elementos
     private static ArrayList<Estructura> estructurasFormadas = new ArrayList<>();
-    private static ArrayList<Lexema> listaDeLexemasP= new ArrayList<>();
+    private static ArrayList<Lexema> listaDeLexemasP = new ArrayList<>();
     private static boolean esLaPrimeraVezEntrandoAlMetodo = true;//Verifica que camino se debe tomar si hay multiples caminos, ya que si es la primera vez entrando al metodo se creara una copia de la pila
     private static int posicionDeAnalisis;
     private static String instruccionGuardada;
@@ -34,13 +35,14 @@ public class AnalizadorSintactico {
     public static void realizarAnalisis(ArrayList<Lexema> listaDeLexemas, JTextArea analisisSintacticoTextArea) {
         pila = new ArrayList<>();
         pilasUsadas = new ArrayList<>();
+        estructurasFormadas = new ArrayList<>();
         posicionDeAnalisis = 0;
         instruccionGuardada = "";
         esLaPrimeraVezEntrandoAlMetodo = true;
         hayErrores = false;
         pila.add("Z");//Llenar la pila con el simbolo especial 
         pila.add("S");//Llenar la pila con el sibolo inicial de la gramatica
-        listaDeLexemasP= listaDeLexemas;
+        listaDeLexemasP = listaDeLexemas;
         for (posicionDeAnalisis = 0; posicionDeAnalisis < listaDeLexemas.size();) {
 
             if (buscarSimboloQuePuedaMoverseSinLectura() != null) {
@@ -133,34 +135,35 @@ public class AnalizadorSintactico {
             }
         }
         System.out.println("FIN DEL ANALISIS SINTACTICO");
-
-        for (Estructura estructurasFormada : estructurasFormadas) {
-            if (estructurasFormada instanceof Asignacion) {
-                System.out.println("ASIGNACION");
-                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
-                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
-                    //System.out.println("Token:" + listaDeLexema.getToken());
-                }
-            } else if (estructurasFormada instanceof Escritura) {
-                System.out.println("        ESCRITURA");
-                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
-                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
-                    //System.out.println("Token:" + listaDeLexema.getToken());
-                }
-            } else if (estructurasFormada instanceof Repetir) {
-                System.out.println("        REPETIR");
-                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
-                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
-                    //System.out.println("Token:" + listaDeLexema.getToken());
-                }
-            } else if (estructurasFormada instanceof Condicional) {
-                System.out.println("        CONDICIONAL");
-                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
-                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
-                    //System.out.println("Token:" + listaDeLexema.getToken());
-                }
-            }
-        }
+        ManejadorDeEscritura nuevaEscritura = new ManejadorDeEscritura(estructurasFormadas, new File(""));
+         nuevaEscritura.evaluarEstructuras();
+//        for (Estructura estructurasFormada : estructurasFormadas) {
+//            if (estructurasFormada instanceof Asignacion) {
+//                System.out.println("ASIGNACION");
+//                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
+//                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
+//                    System.out.println("Token:" + listaDeLexema.getToken());
+//                }
+//            } else if (estructurasFormada instanceof Escritura) {
+//                System.out.println("        ESCRITURA");
+//                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
+//                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
+//                    System.out.println("Token:" + listaDeLexema.getToken());
+//                }
+//            } else if (estructurasFormada instanceof Repetir) {
+//                System.out.println("        REPETIR");
+//                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
+//                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
+//                    System.out.println("Token:" + listaDeLexema.getToken());
+//                }
+//            } else if (estructurasFormada instanceof Condicional) {
+//                System.out.println("        CONDICIONAL");
+//                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
+//                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
+//                    System.out.println("Token:" + listaDeLexema.getToken());
+//                }
+//            }
+//        }
     }
 
     public static void cambioDePila(JTextArea analisisSintacticoTextArea) {
@@ -183,7 +186,7 @@ public class AnalizadorSintactico {
             pila.add("S");//Llenar la pila con el sibolo inicial de la gramatica
             esLaPrimeraVezEntrandoAlMetodo = true;
             System.out.println("ERROR LA ESTRUCTURA NO ES VALIDA:" + instruccionGuardada);
-            analisisSintacticoTextArea.append("****************ERROR, ESTRUCTURA ENCONTRADA NO VALIDA EN FILA:" + listaDeLexemasP.get(posicionDeAnalisis ).getFila() + " " + "COLUMNA:" + listaDeLexemasP.get(posicionDeAnalisis ).getColumna() + "\n");
+            analisisSintacticoTextArea.append("****************ERROR, ESTRUCTURA ENCONTRADA NO VALIDA EN FILA:" + listaDeLexemasP.get(posicionDeAnalisis).getFila() + " " + "COLUMNA:" + listaDeLexemasP.get(posicionDeAnalisis).getColumna() + "\n");
             instruccionGuardada = "";//Reinicio de valores
             hayErrores = true;
             posicionDeAnalisis++;
@@ -256,24 +259,38 @@ public class AnalizadorSintactico {
 
     public static void anadirLexemas(ArrayList<Lexema> listaDeLexemas, String tipoDeEstructura) {
         int tamanoDeEstructura = instruccionGuardada.split(" ").length;
-        int recorridoDeLexemas = posicionDeAnalisis - 1;
+        int recorridoDeLexemas;
+        if (posicionDeAnalisis == tamanoDeEstructura || (posicionDeAnalisis + 1) < listaDeLexemas.size()) {
+            recorridoDeLexemas = posicionDeAnalisis - 1;
+            System.out.println("POSICION DE ANALISIS IGUAL AL DE LECTURA");
+        } else {
+            recorridoDeLexemas = posicionDeAnalisis;
+            System.out.println("POSICION NO ES IGUAL");
+        }
+
         ArrayList<Lexema> misLexemas = new ArrayList<>();
         for (int i = tamanoDeEstructura; i > 0; i--) {
             misLexemas.add(listaDeLexemas.get(recorridoDeLexemas));
             recorridoDeLexemas--;
+            System.out.println("LLENAMOS ARREGLO");
         }
+        ArrayList<Lexema> lexemaAuxiliar = new ArrayList<>();
+        for (int i = (misLexemas.size() - 1); i >= 0; i--) {
+            lexemaAuxiliar.add(misLexemas.get(i));
+        }
+
         switch (tipoDeEstructura) {
             case "ASIGNACION":
-                estructurasFormadas.add(new Asignacion(misLexemas));
+                estructurasFormadas.add(new Asignacion(lexemaAuxiliar));
                 break;
             case "ESCRITURA":
-                estructurasFormadas.add(new Escritura(misLexemas));
+                estructurasFormadas.add(new Escritura(lexemaAuxiliar));
                 break;
             case "REPETIR":
-                estructurasFormadas.add(new Repetir(misLexemas));
+                estructurasFormadas.add(new Repetir(lexemaAuxiliar));
                 break;
             case "CONDICIONAL":
-                estructurasFormadas.add(new Condicional(misLexemas));
+                estructurasFormadas.add(new Condicional(lexemaAuxiliar));
                 break;
         }
     }
