@@ -5,13 +5,8 @@
  */
 package ManejoDeEstructuras;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -45,17 +40,6 @@ public class ManejadorDeEscritura {
                 Repetir nuevaRepeticion = new Repetir(estructura.getListaDeLexemas());
                 nuevaRepeticion.descomponerRepeticion(instruccionesDeSalida, listaDeIdentificadores);
             }
-        }
-        escribirTextoEnArchivo();
-    }
-
-    public void escribirTextoEnArchivo() {
-        System.out.println("INSTRUCCIONES***********************************ESCRITURA");
-        int contador = 0;
-
-        System.out.println("IDENTIFICADORES*************************************");
-        for (Identificador listaDeIdentificadore : listaDeIdentificadores) {
-            System.out.println("ID:" + listaDeIdentificadore.getNombre() + ":" + listaDeIdentificadore.getValor());
         }
     }
 

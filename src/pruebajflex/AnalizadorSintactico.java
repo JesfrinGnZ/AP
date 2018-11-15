@@ -80,7 +80,6 @@ public class AnalizadorSintactico {
                 }
             } else if (verificarSiPilaEstaVacia()) {
                 String tipoDeEstructura = buscarTipoDeEstructura();
-                System.out.println("ESTRUCTURA ACEPTADA, TIPO:" + tipoDeEstructura + " " + "ESTRUCUTURA:" + instruccionGuardada);
                 analisisSintacticoTextArea.append("ESTRUCTURA ACEPTADA, TIPO" + tipoDeEstructura + " " + instruccionGuardada + "\n");
                 if (!hayErrores) {
                     anadirLexemas(listaDeLexemas, tipoDeEstructura);
@@ -109,7 +108,6 @@ public class AnalizadorSintactico {
                     //Se pueden dar 3 casos:
                     if ((posicionDeAnalisis + 1) == listaDeLexemas.size() && buscarSimaDePila().equals("Z")) {//1)Ya no hay mas que leer y la sima de pila era z, por lo tanto se acepta
                         String tipoDeEstructura = buscarTipoDeEstructura();
-                        System.out.println("ESTRUCTURA ACEPTADA, TIPO" + tipoDeEstructura + " " + instruccionGuardada);
                         analisisSintacticoTextArea.append("ESTRUCTURA ACEPTADA, TIPO" + tipoDeEstructura + " " + instruccionGuardada + "\n");
                         if (!hayErrores) {
                             anadirLexemas(listaDeLexemas, tipoDeEstructura);
@@ -119,7 +117,6 @@ public class AnalizadorSintactico {
                         break;
                     } else if ((posicionDeAnalisis + 1) == listaDeLexemas.size() && !buscarSimaDePila().equals("Z")) {//2)Ya no hay mas que leer y la sima de la pila no era z, no se acepta
                         analisisSintacticoTextArea.append("****************ERROR, ESTRUCTURA ENCONTRADA NO VALIDA EN FILA:" + listaDeLexemas.get(posicionDeAnalisis - 1).getFila() + " " + "COLUMNA:" + listaDeLexemas.get(posicionDeAnalisis - 1).getColumna() + "\n");
-                        System.out.println("ERROR LA ESTRUCTURA NO ES VALIDA:" + instruccionGuardada);
                         pila = new ArrayList<>();
                         pilasUsadas = new ArrayList<>();
                         hayErrores = true;
@@ -134,37 +131,15 @@ public class AnalizadorSintactico {
                 }
             }
         }
-        System.out.println("FIN DEL ANALISIS SINTACTICO");
-        ManejadorDeEscritura nuevaEscritura = new ManejadorDeEscritura(estructurasFormadas, new File(""));
-         nuevaEscritura.evaluarEstructuras();
-         return nuevaEscritura.getInstruccionesDeSalida();
-//        for (Estructura estructurasFormada : estructurasFormadas) {
-//            if (estructurasFormada instanceof Asignacion) {
-//                System.out.println("ASIGNACION");
-//                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
-//                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
-//                    System.out.println("Token:" + listaDeLexema.getToken());
-//                }
-//            } else if (estructurasFormada instanceof Escritura) {
-//                System.out.println("        ESCRITURA");
-//                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
-//                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
-//                    System.out.println("Token:" + listaDeLexema.getToken());
-//                }
-//            } else if (estructurasFormada instanceof Repetir) {
-//                System.out.println("        REPETIR");
-//                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
-//                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
-//                    System.out.println("Token:" + listaDeLexema.getToken());
-//                }
-//            } else if (estructurasFormada instanceof Condicional) {
-//                System.out.println("        CONDICIONAL");
-//                for (Lexema listaDeLexema : estructurasFormada.getListaDeLexemas()) {
-//                    System.out.println("LEXEMA:" + listaDeLexema.getLexema());
-//                    System.out.println("Token:" + listaDeLexema.getToken());
-//                }
-//            }
-//        }
+        if (hayErrores) {
+            estructurasFormadas = new ArrayList<>();
+            return null;
+        } else {
+            ManejadorDeEscritura nuevaEscritura = new ManejadorDeEscritura(estructurasFormadas, new File(""));
+            nuevaEscritura.evaluarEstructuras();
+            return nuevaEscritura.getInstruccionesDeSalida();
+        }
+
     }
 
     public static void cambioDePila(JTextArea analisisSintacticoTextArea) {
@@ -186,7 +161,6 @@ public class AnalizadorSintactico {
             pila.add("Z");//Llenar la pila con el simbolo especial 
             pila.add("S");//Llenar la pila con el sibolo inicial de la gramatica
             esLaPrimeraVezEntrandoAlMetodo = true;
-            System.out.println("ERROR LA ESTRUCTURA NO ES VALIDA:" + instruccionGuardada);
             analisisSintacticoTextArea.append("****************ERROR, ESTRUCTURA ENCONTRADA NO VALIDA EN FILA:" + listaDeLexemasP.get(posicionDeAnalisis).getFila() + " " + "COLUMNA:" + listaDeLexemasP.get(posicionDeAnalisis).getColumna() + "\n");
             instruccionGuardada = "";//Reinicio de valores
             hayErrores = true;
@@ -263,17 +237,14 @@ public class AnalizadorSintactico {
         int recorridoDeLexemas;
         if (posicionDeAnalisis == tamanoDeEstructura || (posicionDeAnalisis + 1) < listaDeLexemas.size()) {
             recorridoDeLexemas = posicionDeAnalisis - 1;
-            System.out.println("POSICION DE ANALISIS IGUAL AL DE LECTURA");
         } else {
             recorridoDeLexemas = posicionDeAnalisis;
-            System.out.println("POSICION NO ES IGUAL");
         }
 
         ArrayList<Lexema> misLexemas = new ArrayList<>();
         for (int i = tamanoDeEstructura; i > 0; i--) {
             misLexemas.add(listaDeLexemas.get(recorridoDeLexemas));
             recorridoDeLexemas--;
-            System.out.println("LLENAMOS ARREGLO");
         }
         ArrayList<Lexema> lexemaAuxiliar = new ArrayList<>();
         for (int i = (misLexemas.size() - 1); i >= 0; i--) {

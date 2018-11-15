@@ -26,9 +26,6 @@ public class Condicional extends Estructura {
             getListaDeLexemas().remove(0);//Eliminar VERDADERO
             getListaDeLexemas().remove(0);//Eliminar ENTONCES
             getListaDeLexemas().remove(getListaDeLexemas().size() - 1);//Eliminar FIN
-            for (Lexema listaDeLexema : getListaDeLexemas()) {
-                System.out.println("LEXEMA:"+listaDeLexema.getToken());
-            }
             ArrayList<Escritura> listaDeEscrituras = new ArrayList<>();
             ArrayList<Lexema> lexemasParaEscritura = new ArrayList<>();
             if (!getListaDeLexemas().isEmpty()) {

@@ -18,8 +18,8 @@ public class PruebaJflex {
      */
     public static void main(String[] args) {
 
-        String path = "/home/jesfrin/NetBeansProjects/PruebaJflex/src/pruebajflex/Lexer.flex";
-        generarLexer(path);
+//        String path = "/home/jesfrin/NetBeansProjects/PruebaJflex/src/pruebajflex/Lexer.flex";
+//        generarLexer(path);
         FramePrincipal nuevo = new FramePrincipal();
         nuevo.setVisible(true);
 

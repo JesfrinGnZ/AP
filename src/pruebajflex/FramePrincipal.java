@@ -401,9 +401,7 @@ public class FramePrincipal extends javax.swing.JFrame {
             }
         }
 
-        for (Lexema listaDeLexema : listaDeLexemas) {
-            System.out.println("Token:" + listaDeLexema.getLexema());
-        }
+     
 
     }//GEN-LAST:event_analizarButtonActionPerformed
 
@@ -542,39 +540,41 @@ public class FramePrincipal extends javax.swing.JFrame {
         if (listaDeLexemas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El analisis lexico no concluyo con exito, compruebe sus errores para continuar.");
         } else {
-            ArrayList<Lexema> listaSinComentarios = new ArrayList<>();
-            for (Lexema lexemaActual : listaDeLexemas) {
-                if (!lexemaActual.getLexema().toString().equals(Token.COMENTARIO_DE_UNA_LINEA.toString())) {
-                    listaSinComentarios.add(lexemaActual);
-                }
-            }
 
-            for (Lexema listaSinComentario : listaSinComentarios) {
-                System.out.println("ELEMNETO LISTA SIN COMENTARIOS:" + listaSinComentario.getToken());
-            }
             JFileChooser file = new JFileChooser();
             file.showSaveDialog(this);
             File ruta = file.getSelectedFile();
-            System.out.println("RUTA:"+ruta);
-            AnalizadorSintactico.setRutaDeArchivoDeSalida(ruta);
-            ArrayList<String> instrucciones=AnalizadorSintactico.realizarAnalisis(listaSinComentarios, analisisSintacticoTextArea);
-            if(!instrucciones.isEmpty()){
-                        try {
-            if(!ruta.exists()){
-                ruta.createNewFile();
+            if (ruta == null) {
+                JOptionPane.showMessageDialog(this, "Debe indicar una direccion para el archivo de salida");
+            } else {
+                ArrayList<Lexema> listaSinComentarios = new ArrayList<>();
+                for (Lexema lexemaActual : listaDeLexemas) {
+                    if (!lexemaActual.getLexema().toString().equals(Token.COMENTARIO_DE_UNA_LINEA.toString())) {
+                        listaSinComentarios.add(lexemaActual);
+                    }
+                }
+                AnalizadorSintactico.setRutaDeArchivoDeSalida(ruta);
+                ArrayList<String> instrucciones = AnalizadorSintactico.realizarAnalisis(listaSinComentarios, analisisSintacticoTextArea);
+                if (instrucciones!=null) {
+                    try {
+                        if (!ruta.exists()) {
+                            ruta.createNewFile();
+                        }
+                        BufferedWriter bw;
+                        bw = new BufferedWriter(new FileWriter(ruta, true));
+                        for (String string : instrucciones) {
+                            bw.write(string + "\n");
+                        }
+                        bw.close();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "No se ha creado el archivo ya que ha existido un error interno :(");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se ha creado el archivo ya que existen errores sintacticos");
+                }
+
             }
-            BufferedWriter bw;
-            bw = new BufferedWriter(new FileWriter(ruta,true));
-            for (String string : instrucciones) {
-                bw.write(string+"\n");
-            }
-            bw.close();
-        } catch (Exception e) {
-            System.out.println("Algo ha salido mal :(");
-        }
-            }else{
-                JOptionPane.showMessageDialog(this, "No se ha creado el archivo ya que existen errores sintacticos");
-            }
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

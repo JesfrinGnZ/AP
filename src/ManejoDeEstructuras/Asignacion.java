@@ -19,18 +19,10 @@ public class Asignacion extends Estructura {
     }
 
     public void descomponerIdentificador(ArrayList<Identificador> listaDeIdentificadores) {
-        System.out.println("LISTA DE LEXAMAS ENTRANDO");
-        for (Lexema lex : getListaDeLexemas()) {
-            System.out.println("*/*/*/*/*/*/*/*/:" + lex.getToken());
-        }
-        String nombreDeIdentificador = getListaDeLexemas().get(0).getToken();
+        String nombreDeIdentificador = getListaDeLexemas().get(0).getToken();//Gurdamos el nombre del identificador
         getListaDeLexemas().remove(0);//Eliminamos ID
         getListaDeLexemas().remove(0);//Eliminamos signo =
         getListaDeLexemas().remove(getListaDeLexemas().size() - 1);//Eliminamos FIN
-        System.out.println("LISTA DE LEXEMAS SALIENDO:");
-        for (Lexema lex : getListaDeLexemas()) {
-            System.out.println("*/*/*/*/*/*/*/*/:" + lex.getToken());
-        }
 
         ArrayList<String> expresion = new ArrayList<>();//Lista de elementos
         for (Lexema lexemaActual : getListaDeLexemas()) {
@@ -86,7 +78,7 @@ public class Asignacion extends Estructura {
             }
         }
 
-        String valorDeId = valuarOperacion(expresion);
+        String valorDeId = valuarOperacion(expresion);//Valuamos operacion ya sin parentesis
         listaDeIdentificadores.add(new Identificador(nombreDeIdentificador, Integer.valueOf(valorDeId)));
     }
 
@@ -115,7 +107,7 @@ public class Asignacion extends Estructura {
     private String valuarOperacion(ArrayList<String> elementosDeOperacion) {
         String valorADevolver = "";
 
-        while (expresionTieneSignoMultiplicacion(elementosDeOperacion)) {
+        while (expresionTieneSignoMultiplicacion(elementosDeOperacion)) {//Si hay operaciones con ultiplicacion se realizan primero
             int posicionDeSigno = 0;
             int valorDeMultiplicacion;
             String valorMultCadena;
@@ -144,7 +136,7 @@ public class Asignacion extends Estructura {
             }
         }
         int valorDeSuma = 0;
-        for (int i = 0; i < elementosDeOperacion.size(); i += 2) {
+        for (int i = 0; i < elementosDeOperacion.size(); i += 2) {//Se realiza la suma
             valorDeSuma += Integer.valueOf(elementosDeOperacion.get(i));
         }
         valorADevolver = String.valueOf(valorDeSuma);
